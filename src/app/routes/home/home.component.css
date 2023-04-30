@@ -1,0 +1,25 @@
+.newTaskDiv {
+  background-color: var(--hintergrund);
+  padding: 25px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.tasksDiv table {
+  min-width: 300px;
+}
+
+.currentTaskDiv {
+  padding: 25px;
+  border-radius: 12px;
+  min-width: 300px;
+  background-color: var(--hintergrund);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tdTime {
+  text-align: end;
+}/*# sourceMappingURL=home.component.css.map */

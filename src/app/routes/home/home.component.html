@@ -1,0 +1,33 @@
+<app-header></app-header>
+<section>
+    <div class="sectiondiv">
+        <span>Add new Task:</span>
+        <form [formGroup]="newTaskForm" class="newTaskDiv">
+            <div class="inputfeld" id="newTask">
+                <input #newTaskInput formControlName="newTask" type="text" id="newTaskInput" spellcheck="false" placeholder="&nbsp;">
+                <label class="placeholder" for="newTaskInput">Task</label>
+            </div>
+            <button (click)="addTask()" [disabled]="isButtonDisabled">&plus;</button>
+        </form>
+        <br>
+        <span *ngIf="ts.getCurrentTask()">Current Task:</span>
+        <div *ngIf="ts.getCurrentTask()" class="currentTaskDiv">
+            <span>{{ts.getCurrentTask()?.name}}</span>
+            <span>{{ts.getCurrentTask()?.time?.value}}</span>
+        </div>
+        <div *ngIf="ts.getCurrentTask()" class="tasksDiv">
+            <table>
+                <thead>
+                    <th>Task</th>
+                    <th>Time</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let task of ts.getTasks()">
+                        <td>{{task.name}}</td>
+                        <td class="tdTime">{{task.time.value}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
