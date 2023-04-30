@@ -30,8 +30,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "src/assets/ricosCSS/ricosframework.css"
+              "src/assets/ricosCSS/ricosframework.css",
+              "src/styles.scss"
             ],
             "scripts": []
           },
