@@ -1,21 +1,22 @@
 <app-header></app-header>
-<section>
-    <div class="sectiondiv">
-        <span>Add new Task:</span>
-        <form [formGroup]="newTaskForm" class="newTaskDiv">
+<div class="homeContainer">
+    <div class="gridNewTask">
+        <span>add new task:</span>
+        <form [formGroup]="newTaskForm" class="kachel">
             <div class="inputfeld" id="newTask">
                 <input #newTaskInput formControlName="newTask" type="text" id="newTaskInput" spellcheck="false" placeholder="&nbsp;">
                 <label class="placeholder" for="newTaskInput">Task</label>
             </div>
             <button (click)="addTask()" [disabled]="isButtonDisabled">&plus;</button>
         </form>
-        <br>
-        <span *ngIf="ts.getCurrentTask()">Current Task:</span>
-        <div *ngIf="ts.getCurrentTask()" class="currentTaskDiv">
+    </div>
+    <div class="gridTasks">
+        <span *ngIf="ts.getCurrentTask()">current task:</span>
+        <div *ngIf="ts.getCurrentTask()" class="currentTaskDiv kachel">
             <span>{{ts.getCurrentTask()?.name}}</span>
             <span>{{ts.getCurrentTask()?.time?.value}}</span>
         </div>
-        <div *ngIf="ts.getCurrentTask()" class="tasksDiv">
+        <div *ngIf="ts.getCurrentTask()" class="tasksDiv kachel">
             <table>
                 <thead>
                     <th>Task</th>
@@ -23,11 +24,14 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let task of ts.getTasks()">
-                        <td>{{task.name}}</td>
+                        <td>
+                            <fa-icon [icon]="faCheck"></fa-icon>
+                            <span>{{task.name}}</span>
+                            </td>
                         <td class="tdTime">{{task.time.value}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-</section>
+</div>

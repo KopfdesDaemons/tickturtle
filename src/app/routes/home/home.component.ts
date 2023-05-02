@@ -3,6 +3,9 @@ import { TaskserviceService } from 'src/app/services/taskservice.service';
 import { task } from 'src/app/models/task'; 
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import {
+  faCheck
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +13,8 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+  faCheck = faCheck;
+
   newTaskForm: FormGroup;
   isButtonDisabled = true;
 
