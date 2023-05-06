@@ -7,6 +7,7 @@ export class task {
     private minutes = 0;
     private hours = 0;
     counter: any;
+    editMode: boolean = false;
 
     constructor(name: string, time = '00:00:00') {
         this.name = name;

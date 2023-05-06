@@ -6,4 +6,8 @@
   --hsl-color: 170, 50%;
   --body: rgb(219, 237, 229);
   --hintergrund: rgb(240, 255, 246);
+}
+
+[hidden] {
+  display: none !important;
 }/*# sourceMappingURL=styles.css.map */

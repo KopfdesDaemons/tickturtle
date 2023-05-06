@@ -20,7 +20,7 @@ export class TaskserviceService {
 
   // Gibt eine Kopie der aktuellen Aufgaben zurück
   getTasks(): task[] {
-    return [...this.tasks.value.reverse()];
+    return [...this.tasks.value].reverse();
   }
 
   getCurrentTask() {

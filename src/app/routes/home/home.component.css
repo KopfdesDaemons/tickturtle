@@ -42,6 +42,7 @@
 
 .tasksDiv table {
   width: 100%;
+  height: 100%;
   padding: 0 15px;
   margin-top: 0;
 }
@@ -49,9 +50,38 @@
   padding: 15px;
   background: var(--hintergrund);
   border-bottom: 1px solid rgb(228, 228, 228);
+  height: 100%;
 }
-.tasksDiv table td fa-icon {
-  margin-right: 12px;
+.tasksDiv table .tdDiv {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.tasksDiv table .tdDiv span {
+  cursor: text;
+  flex-grow: 1;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+}
+.tasksDiv table .tdTaskName {
+  padding: 0;
+}
+.tasksDiv table .tdTaskName .inputfeld {
+  margin: 0;
+  flex-grow: 1;
+  box-shadow: none;
+}
+.tasksDiv table .tdTaskName .inputfeld input {
+  all: unset;
+  background-color: var(--hintergrund);
+  border-bottom: 3px solid var(--primary-variant-much-brighter);
+  width: 100%;
+}
+.tasksDiv table .tdTaskName .editDiv {
+  flex-grow: 1;
+  display: flex;
 }
 
 .currentTaskDiv {
@@ -61,11 +91,13 @@
 
 .tdTime {
   text-align: end;
+  width: 10%;
 }
 
 @media only screen and (max-width: 740px) {
   .homeContainer {
     grid-template-columns: 1fr;
+    width: 85vw;
   }
   .gridTasks {
     grid-column-start: 1;
