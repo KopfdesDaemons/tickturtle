@@ -29,5 +29,6 @@ export class TaskserviceService {
 
   deleteTask(t: task){
     this.tasks.next(this.tasks.getValue().filter(task => task !== t));
+    if(t == this.currentTask) this.currentTask = undefined;
   }
 }

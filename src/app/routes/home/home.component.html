@@ -1,4 +1,5 @@
 <app-header></app-header>
+<h1>time tracking</h1>
 <div class="homeContainer">
     <div class="gridNewTask">
         <span>add new task:</span>
@@ -17,7 +18,7 @@
             <span>{{ts.getCurrentTask()?.name}}</span>
             <span>{{ts.getCurrentTask()?.time?.value}}</span>
         </div>
-        <div *ngIf="ts.getCurrentTask()" class="tasksDiv kachel">
+        <div *ngIf="ts.getTasks().length > 0" class="tasksDiv kachel">
             <table>
                 <thead>
                     <th>Task</th>
@@ -27,14 +28,17 @@
                     <tr *ngFor="let task of ts.getTasks()">
                         <td class="tdTaskName">
                             <div class="tdDiv">
-                                <span [hidden]="task.editMode" (click)="editModeTaskName(task, $event.currentTarget)">{{task.name}}</span>
+                                <span [hidden]="task.editMode"
+                                    (click)="editModeTaskName(task, $event.currentTarget)">{{task.name}}</span>
                                 <div class="editDiv" *ngIf="task.editMode">
-                                    <div  class="inputfeld">
-                                        <input type="text" id="editTaskName" value="{{task.name}}" #editTaskNameInput (keyup.enter)="editTaskName(task, editTaskNameInput.value)">
+                                    <div class="inputfeld">
+                                        <input type="text" id="editTaskName" value="{{task.name}}" #editTaskNameInput
+                                            (keyup.enter)="editTaskName(task, editTaskNameInput.value)">
                                         <label for="editTaskName"></label>
                                     </div>
-                                    <button *ngIf="task.editMode" (click)="editTaskName(task, editTaskNameInput.value)" class="editBtn">
-                                        <fa-icon [icon]="faCheck" ></fa-icon>
+                                    <button *ngIf="task.editMode" (click)="editTaskName(task, editTaskNameInput.value)"
+                                        class="editBtn">
+                                        <fa-icon [icon]="faCheck"></fa-icon>
                                     </button>
                                 </div>
                                 <button (click)="deleteTask(task)" class="deleteBtn">
@@ -42,7 +46,11 @@
                                 </button>
                             </div>
                         </td>
-                        <td class="tdTime">{{task.time.value}}</td>
+                        <td class="tdTime">
+                            <span>
+                                {{task.time.value}}
+                            </span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
