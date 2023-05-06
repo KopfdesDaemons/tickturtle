@@ -6,7 +6,7 @@
             <div class="inputfeld" id="newTask">
                 <input #newTaskInput formControlName="newTask" type="text" id="newTaskInput" spellcheck="false"
                     placeholder="&nbsp;">
-                <label class="placeholder" for="newTaskInput">Task</label>
+                <label class="placeholder" for="newTaskInput">task name</label>
             </div>
             <button (click)="addTask()" [disabled]="isButtonDisabled">&plus;</button>
         </form>
@@ -30,13 +30,16 @@
                                 <span [hidden]="task.editMode" (click)="editModeTaskName(task, $event.currentTarget)">{{task.name}}</span>
                                 <div class="editDiv" *ngIf="task.editMode">
                                     <div  class="inputfeld">
-                                        <input type="text" id="editTaskName" value="{{task.name}}" #editTaskNameInput focs>
+                                        <input type="text" id="editTaskName" value="{{task.name}}" #editTaskNameInput (keyup.enter)="editTaskName(task, editTaskNameInput.value)">
                                         <label for="editTaskName"></label>
                                     </div>
-                                    <button *ngIf="task.editMode" (click)="editTaskName(task, editTaskNameInput.value)" class="btnicon editBtn">
+                                    <button *ngIf="task.editMode" (click)="editTaskName(task, editTaskNameInput.value)" class="editBtn">
                                         <fa-icon [icon]="faCheck" ></fa-icon>
                                     </button>
                                 </div>
+                                <button (click)="deleteTask(task)" class="deleteBtn">
+                                    <fa-icon [icon]="faXmark"></fa-icon>
+                                </button>
                             </div>
                         </td>
                         <td class="tdTime">{{task.time.value}}</td>

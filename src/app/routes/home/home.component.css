@@ -46,11 +46,19 @@
   padding: 0 15px;
   margin-top: 0;
 }
+.tasksDiv table tr {
+  background: transparent;
+}
 .tasksDiv table td {
   padding: 15px;
-  background: var(--hintergrund);
   border-bottom: 1px solid rgb(228, 228, 228);
   height: 100%;
+}
+.tasksDiv table tr:hover {
+  background-color: var(--hintergrund-variant);
+}
+.tasksDiv table tr:hover .deleteBtn {
+  visibility: visible;
 }
 .tasksDiv table .tdDiv {
   height: 100%;
@@ -65,6 +73,9 @@
   display: inline-flex;
   align-items: center;
 }
+.tasksDiv table .deleteBtn {
+  visibility: hidden;
+}
 .tasksDiv table .tdTaskName {
   padding: 0;
 }
@@ -75,13 +86,13 @@
 }
 .tasksDiv table .tdTaskName .inputfeld input {
   all: unset;
-  background-color: var(--hintergrund);
   border-bottom: 3px solid var(--primary-variant-much-brighter);
   width: 100%;
 }
 .tasksDiv table .tdTaskName .editDiv {
   flex-grow: 1;
   display: flex;
+  align-items: center;
 }
 
 .currentTaskDiv {
@@ -91,7 +102,7 @@
 
 .tdTime {
   text-align: end;
-  width: 10%;
+  width: 20%;
 }
 
 @media only screen and (max-width: 740px) {

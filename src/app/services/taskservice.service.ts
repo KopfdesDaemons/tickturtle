@@ -26,4 +26,8 @@ export class TaskserviceService {
   getCurrentTask() {
     return this.currentTask;
   }
+
+  deleteTask(t: task){
+    this.tasks.next(this.tasks.getValue().filter(task => task !== t));
+  }
 }

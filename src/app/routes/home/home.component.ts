@@ -4,7 +4,8 @@ import { task } from 'src/app/models/task';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import {
-  faCheck
+  faCheck,
+  faXmark
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -14,6 +15,7 @@ import {
 })
 export class HomeComponent {
   faCheck = faCheck;
+  faXmark = faXmark;
 
   newTaskForm: FormGroup;
   isButtonDisabled = true;
@@ -37,6 +39,10 @@ export class HomeComponent {
     this.ts.getCurrentTask()?.time.subscribe((value)=> {
       this.title.setTitle('TickTurtle ' + value + ' ' + this.ts.getCurrentTask()?.name)
     })
+  }
+
+  deleteTask(t: task){
+    this.ts.deleteTask(t);
   }
 
   @HostListener('document:click', ['$event'])
