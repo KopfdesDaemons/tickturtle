@@ -57,10 +57,12 @@ h1 {
 }
 .tasksDiv table tr {
   background: transparent;
+  padding: 5px;
 }
 .tasksDiv table td {
   border-bottom: 1px solid rgb(228, 228, 228);
   height: 100%;
+  padding: 3px;
 }
 .tasksDiv table tr:hover {
   background-color: var(--hintergrund-variant);
@@ -84,16 +86,16 @@ h1 {
 .tasksDiv table .deleteBtn {
   visibility: hidden;
 }
-.tasksDiv table .tdTaskName {
-  padding: 5px;
-}
 .tasksDiv table .tdTaskName .inputfeld {
   margin: 0;
   flex-grow: 1;
   box-shadow: none;
+  height: 100%;
 }
 .tasksDiv table .tdTaskName .inputfeld input {
   all: unset;
+  height: unset;
+  padding: 10px 0 7px 0;
   border-bottom: 3px solid var(--primary-variant-much-brighter);
   width: 100%;
 }

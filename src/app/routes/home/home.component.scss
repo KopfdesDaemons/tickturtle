@@ -60,11 +60,13 @@ h1 {
 
     tr {
         background: transparent;
+        padding: 5px;
     }
 
     td {
         border-bottom: 1px solid rgb(228, 228, 228);
         height: 100%;
+        padding: 3px;
     }
 
     tr:hover {
@@ -96,14 +98,15 @@ h1 {
 
 
     .tdTaskName{
-        padding: 5px;
-
         .inputfeld {
             margin: 0;
             flex-grow: 1;
             box-shadow: none;
+            height: 100%;
             input {
                 all: unset;
+                height: unset;
+                padding: 10px 0 7px 0; // padding buttom border abrechnen
                 border-bottom: 3px solid var(--primary-variant-much-brighter);
                 width: 100%;
             }
