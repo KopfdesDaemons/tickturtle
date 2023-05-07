@@ -5,8 +5,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import {
   faCheck,
-  faXmark
+  faXmark,
+  faPause,
+  faPlay
 } from '@fortawesome/free-solid-svg-icons';
+import { TimeserviceService } from 'src/app/services/timeservice.service';
 
 @Component({
   selector: 'app-home',
@@ -16,12 +19,14 @@ import {
 export class HomeComponent {
   faCheck = faCheck;
   faXmark = faXmark;
+  faPause = faPause;
+  faPlay = faPlay;
 
   newTaskForm: FormGroup;
   isButtonDisabled = true;
   currentTaskInEditMode: task | null = null;
 
-  constructor(public ts: TaskserviceService, private formBuilder: FormBuilder, public title: Title, public elem: ElementRef, public cdRef: ChangeDetectorRef) {
+  constructor(public ts: TaskserviceService, private formBuilder: FormBuilder, public title: Title, public elem: ElementRef, public cdRef: ChangeDetectorRef, public timeS: TimeserviceService) {
     this.newTaskForm = this.formBuilder.group({
       newTask: [''],
     })
@@ -33,7 +38,7 @@ export class HomeComponent {
   }
   
   addTask() {
-    const newTask: task = new task(this.newTaskForm.get('newTask')?.value);
+    const newTask: task = new task(this.newTaskForm.get('newTask')?.value, this.timeS);
     this.ts.addTask(newTask);
     this.newTaskForm.controls['newTask'].setValue('');
     this.ts.getCurrentTask()?.time.subscribe((value)=> {
@@ -67,5 +72,15 @@ export class HomeComponent {
     task.name = name;
     task.editMode = false;
     this.cdRef.detectChanges();
+  }
+
+  stopCounter() {
+    const t = this.ts.getCurrentTask();
+    t?.stopCounter();
+  }
+
+  startCounter() {
+    const t = this.ts.getCurrentTask();
+    t?.startCounter();
   }
 }

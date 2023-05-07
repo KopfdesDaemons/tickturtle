@@ -1,34 +1,52 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { task } from '../models/task';
+import { TimeserviceService } from './timeservice.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskserviceService {
 
-  private currentTask: task | undefined;
+  private currentTask: task | null = null;
   private tasks: BehaviorSubject<task[]> = new BehaviorSubject(new Array());
 
-  constructor() { }
+  constructor(private ts: TimeserviceService) { }
 
-  addTask(task: task) {
-    this.tasks.next(this.tasks.value.concat(task));
-    this.currentTask?.stopCounter();
-    this.currentTask = task;
+  addTask(newTask: task) {
+    this.tasks.next([...this.tasks.value, newTask]);
+    if (this.currentTask) {
+      this.currentTask.stopCounter();
+    }
+    this.currentTask = newTask;
   }
 
-  // Gibt eine Kopie der aktuellen Aufgaben zurück
   getTasks(): task[] {
     return [...this.tasks.value].reverse();
   }
 
-  getCurrentTask() {
+  getCurrentTask(): task | null {
     return this.currentTask;
   }
 
-  deleteTask(t: task){
-    this.tasks.next(this.tasks.getValue().filter(task => task !== t));
-    if(t == this.currentTask) this.currentTask = undefined;
+  deleteTask(taskToDelete: task) {
+    this.tasks.next(this.tasks.value.filter((task) => task !== taskToDelete));
+    if (taskToDelete === this.currentTask) {
+      this.currentTask = null;
+    }
+  }
+
+  getTotalTime(): string {
+    let totalTime = "00:00:00";
+    const tasks = this.tasks.value;
+
+    for (const task of tasks) {
+      const time = task.time.value;
+      if (!time) continue;
+      const formattedTime = this.ts.formatTimeLong(time);
+      totalTime = this.ts.addTime(totalTime, formattedTime);
+    }
+
+    return this.ts.formatTimeShort(totalTime);
   }
 }

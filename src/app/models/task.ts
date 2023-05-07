@@ -1,4 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
+import { TimeserviceService } from '../services/timeservice.service';
 
 export class task {
     name: string;
@@ -8,8 +9,9 @@ export class task {
     private hours = 0;
     counter: any;
     editMode: boolean = false;
+    isStopped: boolean = false;
 
-    constructor(name: string, time = '00:00:00') {
+    constructor(name: string, public ts: TimeserviceService, time = '00:00:00') {
         this.name = name;
         if (time) {
             const [hoursStr, minutesStr, secondsStr] = time.split(':');
@@ -17,25 +19,30 @@ export class task {
             this.minutes = parseInt(minutesStr);
             this.seconds = parseInt(secondsStr);
         }
-        this.time.next(this.formatTime(this.getTimeString()));
-
+        this.time.next(this.ts.formatTimeShort(this.getTimeString()));
+        this.startCounter();
+    }
+    
+    startCounter() {
+        this.isStopped = false;
         this.counter = setInterval(() => {
             this.seconds++;
-
+    
             if (this.seconds === 60) {
                 this.seconds = 0;
                 this.minutes++;
             }
-
+    
             if (this.minutes === 60) {
                 this.minutes = 0;
                 this.hours++;
-            }            
-            this.time.next(this.formatTime(this.getTimeString()));
+            }
+            this.time.next(this.ts.formatTimeShort(this.getTimeString()));
         }, 1000);
     }
 
     stopCounter(): void {
+        this.isStopped = true;
         clearInterval(this.counter);
     }
 
@@ -45,27 +52,7 @@ export class task {
         timeParts.push(this.hours.toString().padStart(2, '0'));
         timeParts.push(this.minutes.toString().padStart(2, '0'));
         timeParts.push(this.seconds.toString().padStart(2, '0'));
-        
+
         return timeParts.join(':');
     }
-
-    private formatTime(timeString: string) {
-        // Extrahiere Stunden, Minuten und Sekunden aus der Zeitangabe
-        const [hours, minutes, seconds] = timeString.split(':').map(Number);
-        
-        // Erstelle eine Liste mit formatierten Zeiteinheiten, die keine führenden Nullen haben
-        const formattedUnits = [];
-        if (hours > 0) {
-          formattedUnits.push(hours.toString())
-        }
-        if (minutes > 0 || formattedUnits.length > 0) {
-          formattedUnits.push(minutes.toString().padStart(2, '0'));
-        }
-        if (seconds >= 0) {
-          formattedUnits.push(seconds.toString().padStart(2, '0'));
-        }
-      
-        // Füge die formatierten Zeiteinheiten zusammen und gib das Ergebnis zurück
-        return formattedUnits.join(':');
-      }
 }

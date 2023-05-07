@@ -6,7 +6,6 @@
 
 h1 {
   text-align: left;
-  width: 100%;
   font-size: 25px;
   margin: 0;
 }
@@ -29,6 +28,10 @@ h1 {
   align-items: center;
 }
 
+.totalTime {
+  grid-row-start: 3;
+}
+
 .kachel {
   background-color: var(--hintergrund);
   padding: 10px;
@@ -44,13 +47,16 @@ h1 {
   padding: 0 5%;
 }
 
-.gridTasks {
+.currentTaskGridDiv {
+  display: flex;
+  flex-direction: column;
   grid-column-start: 2;
   grid-row-start: 2;
 }
 
-.tasksDiv {
-  margin-top: 1em;
+.gridTasks {
+  grid-column-start: 2;
+  grid-row-start: 3;
 }
 
 .tasksDiv table {
@@ -61,6 +67,7 @@ h1 {
 }
 .tasksDiv table button {
   height: 100%;
+  width: 12px;
 }
 .tasksDiv table tr {
   background: transparent;
@@ -113,11 +120,14 @@ h1 {
 }
 .tasksDiv table .tdTime {
   text-align: end;
-  width: 20%;
+  width: 15%;
   padding: 0;
 }
 .tasksDiv table .tdTime span {
-  margin: 4px auto;
+  margin: 4px 0 4px auto;
+}
+
+.timeSpan {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,24 +139,42 @@ h1 {
 
 .currentTaskDiv {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 20px;
+}
+.currentTaskDiv span:first-of-type {
+  margin-right: auto;
+}
+.currentTaskDiv .timeSpan {
+  width: 20%;
+}
+.currentTaskDiv .isStopped {
+  background-color: rgb(228, 151, 151);
 }
 
 @media only screen and (max-width: 740px) {
   .homeContainer {
     grid-template-columns: 1fr;
     width: 85vw;
-  }
-  .gridTasks {
-    grid-column-start: 1;
-    grid-row-start: 4;
-  }
-  .gridNewTask {
-    grid-row-start: 3;
+    gap: 10px;
   }
   .infokachel {
     grid-column-start: 1;
     grid-row-start: 2;
+  }
+  .currentTaskGridDiv {
+    grid-column-start: 1;
+    grid-row-start: 3;
+  }
+  .totalTime {
+    grid-column-start: 1;
+    grid-row-start: 4;
+  }
+  .gridNewTask {
+    grid-row-start: 5;
+  }
+  .gridTasks {
+    grid-column-start: 1;
+    grid-row-start: 6;
   }
 }/*# sourceMappingURL=home.component.css.map */

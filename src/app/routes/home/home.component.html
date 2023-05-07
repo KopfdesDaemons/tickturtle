@@ -3,7 +3,7 @@
     <h1>Time tracking</h1>
     <div class="infokachel kachel"><span>Record the working time of several work steps and get the total time.</span></div>
     <div class="gridNewTask">
-        <span>add new task:</span>
+        <span>Add new task:</span>
         <form [formGroup]="newTaskForm" class="kachel">
             <div class="inputfeld" id="newTask">
                 <input #newTaskInput formControlName="newTask" type="text" id="newTaskInput" spellcheck="false"
@@ -13,12 +13,24 @@
             <button (click)="addTask()" [disabled]="isButtonDisabled">&plus;</button>
         </form>
     </div>
-    <div class="gridTasks">
-        <span *ngIf="ts.getCurrentTask()">current task:</span>
+
+    <div class="totalTime Kachel"><span>Total time</span><span class="timeSpan">{{ts.getTotalTime()}}</span></div>
+
+    <div class="currentTaskGridDiv">
+        <span *ngIf="ts.getCurrentTask()">Current task:</span>
         <div *ngIf="ts.getCurrentTask()" class="currentTaskDiv kachel">
             <span>{{ts.getCurrentTask()?.name}}</span>
-            <span>{{ts.getCurrentTask()?.time?.value}}</span>
+            <button *ngIf="!ts.getCurrentTask()?.isStopped" (click)="stopCounter()">
+                <fa-icon [icon]="faPause"></fa-icon>
+            </button>
+            <button *ngIf="ts.getCurrentTask()?.isStopped" (click)="startCounter()">
+                <fa-icon [icon]="faPlay"></fa-icon>
+            </button>
+            <span class="timeSpan" [class.isStopped]="ts.getCurrentTask()?.isStopped" >{{ts.getCurrentTask()?.time?.value}}</span>
         </div>
+    </div>
+
+    <div class="gridTasks">
         <div *ngIf="ts.getTasks().length > 0" class="tasksDiv kachel">
             <table>
                 <thead>
@@ -48,7 +60,7 @@
                             </div>
                         </td>
                         <td class="tdTime">
-                            <span>
+                            <span class="timeSpan">
                                 {{task.time.value}}
                             </span>
                         </td>
