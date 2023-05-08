@@ -1,58 +1,50 @@
 import { BehaviorSubject } from 'rxjs';
 import { TimeserviceService } from '../services/timeservice.service';
+import { timeSpan } from './timeSpan';
 
-export class task {
-    name: string;
-    time: BehaviorSubject<string> = new BehaviorSubject('');
-    private seconds = 0;
-    private minutes = 0;
-    private hours = 0;
+export class Task {
+    time: BehaviorSubject<string> = new BehaviorSubject('00');
+    timeSpans: timeSpan[] = []
     counter: any;
     editMode: boolean = false;
     isStopped: boolean = false;
 
-    constructor(name: string, public ts: TimeserviceService, time = '00:00:00') {
-        this.name = name;
-        if (time) {
-            const [hoursStr, minutesStr, secondsStr] = time.split(':');
-            this.hours = parseInt(hoursStr);
-            this.minutes = parseInt(minutesStr);
-            this.seconds = parseInt(secondsStr);
-        }
-        this.time.next(this.ts.formatTimeShort(this.getTimeString()));
+    constructor(public name: string, public ts: TimeserviceService) {
         this.startCounter();
     }
-    
+
     startCounter() {
         this.isStopped = false;
+        this.timeSpans.push(new timeSpan());
+        
         this.counter = setInterval(() => {
-            this.seconds++;
-    
-            if (this.seconds === 60) {
-                this.seconds = 0;
-                this.minutes++;
+            const totalTimes = [];
+            for (let t of this.timeSpans) {
+                const endTime = t.endTime ?? new Date();
+                const diff = endTime.getTime() - t.startTime.getTime();
+                totalTimes.push(diff);
             }
-    
-            if (this.minutes === 60) {
-                this.minutes = 0;
-                this.hours++;
-            }
-            this.time.next(this.ts.formatTimeShort(this.getTimeString()));
+            
+            const sum = totalTimes.reduce((acc, curr) => acc + curr, 0);            
+
+            // die Dauer in Stunden, Minuten und Sekunden berechnen
+            const hours = Math.floor(sum / 3600000); // 1 Stunde = 3600000 Millisekunden
+            const minutes = Math.floor((sum % 3600000) / 60000); // 1 Minute = 60000 Millisekunden
+            const seconds = Math.floor((sum % 60000) / 1000); // 1 Sekunde = 1000 Millisekunden
+
+            const timeString = hours.toString().padStart(2, '0') + ':' +
+                minutes.toString().padStart(2, '0') + ':' +
+                seconds.toString().padStart(2, '0')
+
+            this.time.next(this.ts.formatTimeShort(timeString));
         }, 1000);
     }
 
     stopCounter(): void {
+        const timeSpan = this.timeSpans.at(-1);
+        timeSpan!.endTime = new Date();
         this.isStopped = true;
         clearInterval(this.counter);
-    }
-
-    private getTimeString(): string {
-        const timeParts = [];
-
-        timeParts.push(this.hours.toString().padStart(2, '0'));
-        timeParts.push(this.minutes.toString().padStart(2, '0'));
-        timeParts.push(this.seconds.toString().padStart(2, '0'));
-
-        return timeParts.join(':');
-    }
+        this.counter = null;
+    }    
 }

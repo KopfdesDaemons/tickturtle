@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener } from '@angular/core';
 import { TaskserviceService } from 'src/app/services/taskservice.service';
-import { task } from 'src/app/models/task'; 
+import { Task } from 'src/app/models/task'; 
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import {
@@ -24,7 +24,7 @@ export class HomeComponent {
 
   newTaskForm: FormGroup;
   isButtonDisabled = true;
-  currentTaskInEditMode: task | null = null;
+  currentTaskInEditMode: Task | null = null;
 
   constructor(public ts: TaskserviceService, private formBuilder: FormBuilder, public title: Title, public elem: ElementRef, public cdRef: ChangeDetectorRef, public timeS: TimeserviceService) {
     this.newTaskForm = this.formBuilder.group({
@@ -38,7 +38,7 @@ export class HomeComponent {
   }
   
   addTask() {
-    const newTask: task = new task(this.newTaskForm.get('newTask')?.value, this.timeS);
+    const newTask: Task = new Task(this.newTaskForm.get('newTask')?.value, this.timeS);
     this.ts.addTask(newTask);
     this.newTaskForm.controls['newTask'].setValue('');
     this.ts.getCurrentTask()?.time.subscribe((value)=> {
@@ -46,7 +46,7 @@ export class HomeComponent {
     })
   }
 
-  deleteTask(t: task){
+  deleteTask(t: Task){
     this.ts.deleteTask(t);
   }
 
@@ -59,7 +59,7 @@ export class HomeComponent {
     this.currentTaskInEditMode = null;
   }
 
-  editModeTaskName(t: task, target:any) {
+  editModeTaskName(t: Task, target:any) {
     t.editMode = true;
     this.cdRef.detectChanges();
     const td = target.closest('.tdTaskName');
@@ -68,7 +68,7 @@ export class HomeComponent {
     this.currentTaskInEditMode = t;
   }
 
-  editTaskName(task: task, name:string) {
+  editTaskName(task: Task, name:string) {
     task.name = name;
     task.editMode = false;
     this.cdRef.detectChanges();
