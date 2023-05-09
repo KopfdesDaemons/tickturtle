@@ -9,35 +9,39 @@ export class Task {
     editMode: boolean = false;
     isStopped: boolean = false;
 
-    constructor(public name: string, public ts: TimeserviceService) {
-        this.startCounter();
-    }
+    constructor(public name: string, public ts: TimeserviceService) {}
 
     startCounter() {
         this.isStopped = false;
         this.timeSpans.push(new timeSpan());
         
         this.counter = setInterval(() => {
-            const totalTimes = [];
-            for (let t of this.timeSpans) {
-                const endTime = t.endTime ?? new Date();
-                const diff = endTime.getTime() - t.startTime.getTime();
-                totalTimes.push(diff);
-            }
-            
-            const sum = totalTimes.reduce((acc, curr) => acc + curr, 0);            
+           
+            this.setTotalTaskTime();
 
-            // die Dauer in Stunden, Minuten und Sekunden berechnen
-            const hours = Math.floor(sum / 3600000); // 1 Stunde = 3600000 Millisekunden
-            const minutes = Math.floor((sum % 3600000) / 60000); // 1 Minute = 60000 Millisekunden
-            const seconds = Math.floor((sum % 60000) / 1000); // 1 Sekunde = 1000 Millisekunden
-
-            const timeString = hours.toString().padStart(2, '0') + ':' +
-                minutes.toString().padStart(2, '0') + ':' +
-                seconds.toString().padStart(2, '0')
-
-            this.time.next(this.ts.formatTimeShort(timeString));
         }, 1000);
+    }
+
+    setTotalTaskTime(){
+        const totalTimeSpans = [];
+        for (let t of this.timeSpans) {
+            const endTime = t.endTime ?? new Date();
+            const diff = endTime.getTime() - t.startTime.getTime();
+            totalTimeSpans.push(diff);
+        }
+        
+        const sum = totalTimeSpans.reduce((acc, curr) => acc + curr, 0);            
+
+        // die Dauer in Stunden, Minuten und Sekunden berechnen
+        const hours = Math.floor(sum / 3600000); // 1 Stunde = 3600000 Millisekunden
+        const minutes = Math.floor((sum % 3600000) / 60000); // 1 Minute = 60000 Millisekunden
+        const seconds = Math.floor((sum % 60000) / 1000); // 1 Sekunde = 1000 Millisekunden
+
+        const timeString = hours.toString().padStart(2, '0') + ':' +
+            minutes.toString().padStart(2, '0') + ':' +
+            seconds.toString().padStart(2, '0');
+
+        this.time.next(this.ts.formatTimeShort(timeString));
     }
 
     stopCounter(): void {
@@ -46,5 +50,5 @@ export class Task {
         this.isStopped = true;
         clearInterval(this.counter);
         this.counter = null;
-    }    
+    }  
 }

@@ -31,6 +31,8 @@ export class HomeComponent {
       newTask: [''],
     })
     
+    ts.fromLocalStorage();
+
     // Aktiviert und Deaktiviert den Hinzufügenbutton
     this.newTaskForm.get('newTask')?.valueChanges.subscribe(value => {
       this.isButtonDisabled = (value == '');
@@ -39,6 +41,7 @@ export class HomeComponent {
   
   addTask() {
     const newTask: Task = new Task(this.newTaskForm.get('newTask')?.value, this.timeS);
+    newTask.startCounter();
     this.ts.addTask(newTask);
     this.newTaskForm.controls['newTask'].setValue('');
     this.ts.getCurrentTask()?.time.subscribe((value)=> {
@@ -76,11 +79,13 @@ export class HomeComponent {
 
   stopCounter() {
     const t = this.ts.getCurrentTask();
+    this.ts.toLocalStorage();
     t?.stopCounter();
   }
 
   startCounter() {
     const t = this.ts.getCurrentTask();
+    this.ts.toLocalStorage();
     t?.startCounter();
   }
 }
