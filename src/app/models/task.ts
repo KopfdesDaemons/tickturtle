@@ -13,7 +13,12 @@ export class Task {
 
     startCounter() {
         this.isStopped = false;
-        this.timeSpans.push(new timeSpan());
+        const lastTimeSpan = this.timeSpans.at(-1);
+        const startTime= lastTimeSpan?.startTime;
+        const endTime = lastTimeSpan?.endTime;
+        if(!(startTime && !endTime)){
+            this.timeSpans.push(new timeSpan());
+        }
         
         this.counter = setInterval(() => {
            

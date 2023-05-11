@@ -16,9 +16,7 @@ export class TaskserviceService {
 
   addTask(newTask: Task) {
     this.tasks.next([...this.tasks.value, newTask]);
-    if (this.currentTask) {
-      this.currentTask.stopCounter();
-    }
+    if (this.currentTask) this.currentTask.stopCounter();
     this.currentTask = newTask;
     this.toLocalStorage();
   }
@@ -54,33 +52,33 @@ export class TaskserviceService {
   }
 
   toLocalStorage(): void {
-    const taskMap: Map<string, string> = new Map();
+    const taskMap: Map<string, any> = new Map();
     const tasks = this.tasks.value;
-    for(const t of tasks) {
-      taskMap.set(t.name, JSON.stringify(t.timeSpans))
+    for (const t of tasks) {
+      taskMap.set(t.name, {
+        timeSpans: JSON.stringify(t.timeSpans),
+        isStopped: t.isStopped
+      })
     }
     localStorage.setItem('tasks', JSON.stringify([...taskMap]));
   }
 
-  fromLocalStorage():void {
+  fromLocalStorage(): void {
     const string = localStorage.getItem('tasks') ?? '';
     const obj = JSON.parse(string);
-    console.log(obj);
 
-    for(const t of obj){
+    for (const t of obj) {
       const loadedTask = new Task(t[0], this.ts);
 
       // Load timeSpans
-      const timeSpansString = t[1];
-      console.log(timeSpansString);
-      
+      const timeSpansString = t[1].timeSpans;
+
       const timeSpans = JSON.parse(timeSpansString).map((obj: any) => {
         const timeSp: timeSpan = new timeSpan();
         timeSp.startTime = new Date(obj.startTime);
         timeSp.endTime = obj.endTime ? new Date(obj.endTime) : null;
         return timeSp;
       });
-      
 
       loadedTask.timeSpans = timeSpans;
       loadedTask.setTotalTaskTime();
@@ -88,9 +86,11 @@ export class TaskserviceService {
     }
 
     this.currentTask = this.tasks.value.at(-1) ?? null;
-    if(!this.currentTask?.timeSpans.at(-1)?.endTime){
+    if (this.currentTask) this.currentTask.isStopped = obj.at(-1).isStopped;
+
+    if (!this.currentTask?.timeSpans.at(-1)?.endTime) {
       this.currentTask?.startCounter();
-    } else{
+    } else {
       this.currentTask.isStopped = true;
     }
   }

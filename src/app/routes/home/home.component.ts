@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener } from '@angular/core';
 import { TaskserviceService } from 'src/app/services/taskservice.service';
-import { Task } from 'src/app/models/task'; 
+import { Task } from 'src/app/models/task';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import {
@@ -30,7 +30,7 @@ export class HomeComponent {
     this.newTaskForm = this.formBuilder.group({
       newTask: [''],
     })
-    
+
     ts.fromLocalStorage();
 
     // Aktiviert und Deaktiviert den Hinzufügenbutton
@@ -38,31 +38,31 @@ export class HomeComponent {
       this.isButtonDisabled = (value == '');
     });
   }
-  
+
   addTask() {
     const newTask: Task = new Task(this.newTaskForm.get('newTask')?.value, this.timeS);
     newTask.startCounter();
     this.ts.addTask(newTask);
     this.newTaskForm.controls['newTask'].setValue('');
-    this.ts.getCurrentTask()?.time.subscribe((value)=> {
+    this.ts.getCurrentTask()?.time.subscribe((value) => {
       this.title.setTitle('TickTurtle ' + value + ' ' + this.ts.getCurrentTask()?.name)
     })
   }
 
-  deleteTask(t: Task){
+  deleteTask(t: Task) {
     this.ts.deleteTask(t);
   }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: any) {
-    for(let t of this.ts.getTasks()){
-      if(t === this.currentTaskInEditMode) continue;
-      t.editMode = false;      
+    for (let t of this.ts.getTasks()) {
+      if (t === this.currentTaskInEditMode) continue;
+      t.editMode = false;
     }
     this.currentTaskInEditMode = null;
   }
 
-  editModeTaskName(t: Task, target:any) {
+  editModeTaskName(t: Task, target: any) {
     t.editMode = true;
     this.cdRef.detectChanges();
     const td = target.closest('.tdTaskName');
@@ -71,7 +71,7 @@ export class HomeComponent {
     this.currentTaskInEditMode = t;
   }
 
-  editTaskName(task: Task, name:string) {
+  editTaskName(task: Task, name: string) {
     task.name = name;
     task.editMode = false;
     this.cdRef.detectChanges();
@@ -79,13 +79,13 @@ export class HomeComponent {
 
   stopCounter() {
     const t = this.ts.getCurrentTask();
-    this.ts.toLocalStorage();
     t?.stopCounter();
+    this.ts.toLocalStorage();
   }
 
   startCounter() {
     const t = this.ts.getCurrentTask();
-    this.ts.toLocalStorage();
     t?.startCounter();
+    this.ts.toLocalStorage();
   }
 }
