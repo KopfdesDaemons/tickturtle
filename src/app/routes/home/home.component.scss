@@ -172,6 +172,15 @@ h1 {
     }
 }
 
+.statistic{
+    display: flex;
+    justify-content: space-between;
+
+    button{
+        margin-top: 24px;
+    }
+}
+
 @media only screen and (max-width: 740px) {
     .homeContainer {
         grid-template-columns: 1fr;

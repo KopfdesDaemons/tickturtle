@@ -14,7 +14,10 @@
         </form>
     </div>
 
-    <div class="totalTime Kachel"><span>Total time</span><span class="timeSpan">{{ts.getTotalTime()}}</span></div>
+    <div class="statistic">
+        <div class="totalTime Kachel"><span>Total time</span><span class="timeSpan">{{ts.getTotalTime()}}</span></div>
+        <button (click)="deleteAllTasks()">Delete all</button>
+    </div>
 
     <div class="currentTaskGridDiv">
         <span *ngIf="ts.getCurrentTask()">Current task:</span>

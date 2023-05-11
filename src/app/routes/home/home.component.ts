@@ -55,8 +55,11 @@ export class HomeComponent {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: any) {
+    if (event.target.parentNode?.classList.contains('inputfeld')) return;
+
+    // Bearbeitenmodus verlassen, wenn klick auf Webseite
     for (let t of this.ts.getTasks()) {
-      if (t === this.currentTaskInEditMode) continue;
+      if (t == this.currentTaskInEditMode) continue;
       t.editMode = false;
     }
     this.currentTaskInEditMode = null;
@@ -73,6 +76,7 @@ export class HomeComponent {
 
   editTaskName(task: Task, name: string) {
     task.name = name;
+    this.ts.toLocalStorage();
     task.editMode = false;
     this.cdRef.detectChanges();
   }
@@ -86,6 +90,11 @@ export class HomeComponent {
   startCounter() {
     const t = this.ts.getCurrentTask();
     t?.startCounter();
+    this.ts.toLocalStorage();
+  }
+
+  deleteAllTasks() {
+    this.ts.deleteAll();
     this.ts.toLocalStorage();
   }
 }

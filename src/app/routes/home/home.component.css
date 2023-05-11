@@ -152,6 +152,14 @@ h1 {
   background-color: rgb(228, 151, 151);
 }
 
+.statistic {
+  display: flex;
+  justify-content: space-between;
+}
+.statistic button {
+  margin-top: 24px;
+}
+
 @media only screen and (max-width: 740px) {
   .homeContainer {
     grid-template-columns: 1fr;

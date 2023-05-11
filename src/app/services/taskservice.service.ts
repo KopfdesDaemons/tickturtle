@@ -51,6 +51,11 @@ export class TaskserviceService {
     return this.ts.formatTimeShort(totalTime);
   }
 
+  deleteAll(){
+    this.tasks = new BehaviorSubject(new Array());
+    this.currentTask = null;
+  }
+
   toLocalStorage(): void {
     const taskMap: Map<string, any> = new Map();
     const tasks = this.tasks.value;
@@ -64,7 +69,9 @@ export class TaskserviceService {
   }
 
   fromLocalStorage(): void {
-    const string = localStorage.getItem('tasks') ?? '';
+    const localStorageItem = localStorage.getItem('tasks');
+    if(!localStorageItem) return;
+    const string = localStorageItem ?? '';
     const obj = JSON.parse(string);
 
     for (const t of obj) {
