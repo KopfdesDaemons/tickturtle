@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, HostListener } from '@angular
 import { TaskserviceService } from 'src/app/services/taskservice.service';
 import { Task } from 'src/app/models/task';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import {
   faCheck,
   faXmark,
@@ -26,10 +26,13 @@ export class HomeComponent {
   isButtonDisabled = true;
   currentTaskInEditMode: Task | null = null;
 
-  constructor(public ts: TaskserviceService, private formBuilder: FormBuilder, public title: Title, public elem: ElementRef, public cdRef: ChangeDetectorRef, public timeS: TimeserviceService) {
+  constructor(public ts: TaskserviceService, private formBuilder: FormBuilder, public title: Title, public elem: ElementRef, public cdRef: ChangeDetectorRef, public timeS: TimeserviceService, public meta: Meta ) {
     this.newTaskForm = this.formBuilder.group({
       newTask: [''],
     })
+
+    const description = 'Record the working time of several work steps and get the total time. No registration required.'
+    this.meta.addTag({ name: 'description', content: description }); 
 
     ts.fromLocalStorage();
 
@@ -96,5 +99,9 @@ export class HomeComponent {
   deleteAllTasks() {
     this.ts.deleteAll();
     this.ts.toLocalStorage();
+  }
+
+  print(){
+    window.print();
   }
 }

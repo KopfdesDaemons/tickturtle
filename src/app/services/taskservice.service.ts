@@ -51,7 +51,7 @@ export class TaskserviceService {
     return this.ts.formatTimeShort(totalTime);
   }
 
-  deleteAll(){
+  deleteAll() {
     this.tasks = new BehaviorSubject(new Array());
     this.currentTask = null;
   }
@@ -61,7 +61,7 @@ export class TaskserviceService {
     const tasks = this.tasks.value;
     for (const t of tasks) {
       taskMap.set(t.name, {
-        timeSpans: JSON.stringify(t.timeSpans),
+        timeSpans: t.timeSpans,
         isStopped: t.isStopped
       })
     }
@@ -69,36 +69,38 @@ export class TaskserviceService {
   }
 
   fromLocalStorage(): void {
-    const localStorageItem = localStorage.getItem('tasks');
-    if(!localStorageItem) return;
-    const string = localStorageItem ?? '';
-    const obj = JSON.parse(string);
-
-    for (const t of obj) {
-      const loadedTask = new Task(t[0], this.ts);
-
-      // Load timeSpans
-      const timeSpansString = t[1].timeSpans;
-
-      const timeSpans = JSON.parse(timeSpansString).map((obj: any) => {
-        const timeSp: timeSpan = new timeSpan();
-        timeSp.startTime = new Date(obj.startTime);
-        timeSp.endTime = obj.endTime ? new Date(obj.endTime) : null;
-        return timeSp;
-      });
-
-      loadedTask.timeSpans = timeSpans;
-      loadedTask.setTotalTaskTime();
-      this.tasks.next([...this.tasks.value, loadedTask]);
-    }
-
-    this.currentTask = this.tasks.value.at(-1) ?? null;
-    if (this.currentTask) this.currentTask.isStopped = obj.at(-1).isStopped;
-
-    if (!this.currentTask?.timeSpans.at(-1)?.endTime) {
-      this.currentTask?.startCounter();
-    } else {
-      this.currentTask.isStopped = true;
-    }
+    try{
+      const localStorageItem = localStorage.getItem('tasks');
+      if (!localStorageItem) return;
+      const string = localStorageItem ?? '';
+      const obj = JSON.parse(string);
+  
+      for (const t of obj) {
+        const loadedTask = new Task(t[0], this.ts);
+  
+        // Load timeSpans
+        const timeSpansString = t[1].timeSpans;
+  
+        const timeSpans = timeSpansString.map((obj: any) => {
+          const timeSp: timeSpan = new timeSpan();
+          timeSp.startTime = new Date(obj.startTime);
+          timeSp.endTime = obj.endTime ? new Date(obj.endTime) : null;
+          return timeSp;
+        });
+  
+        loadedTask.timeSpans = timeSpans;
+        loadedTask.setTotalTaskTime();
+        this.tasks.next([...this.tasks.value, loadedTask]);
+      }
+  
+      this.currentTask = this.tasks.value.at(-1) ?? null;
+      if (this.currentTask) this.currentTask.isStopped = obj.at(-1).isStopped;
+  
+      if (!this.currentTask?.timeSpans.at(-1)?.endTime) {
+        this.currentTask?.startCounter();
+      } else {
+        this.currentTask.isStopped = true;
+      }
+    } catch{}
   }
 }

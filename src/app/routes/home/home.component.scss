@@ -181,7 +181,7 @@ h1 {
     }
 }
 
-@media only screen and (max-width: 740px) {
+@media print, only screen and (max-width: 740px) {
     .homeContainer {
         grid-template-columns: 1fr;
         width: 85vw;
@@ -210,5 +210,11 @@ h1 {
     .gridTasks {
         grid-column-start: 1;
         grid-row-start: 6;
+    }
+}
+
+@media print {
+    .gridNewTask, .currentTaskGridDiv, .infokachel, h1, button {
+        display: none;
     }
 }
