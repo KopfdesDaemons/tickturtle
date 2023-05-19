@@ -1,6 +1,8 @@
-// * {
-//     font-family: 'Rubik', sans-serif;
-// }
+.kachel {
+    background-color: var(--hintergrund);
+    padding: 10px;
+    border-radius: 12px;
+}
 
 :root {
     --hsl-color: 170, 50%;

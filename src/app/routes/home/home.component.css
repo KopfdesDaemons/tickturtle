@@ -33,19 +33,15 @@ h1 {
   grid-row-start: 3;
 }
 
-.kachel {
-  background-color: var(--hintergrund);
-  padding: 10px;
-  border-radius: 12px;
-}
-
 .homeContainer {
-  margin-top: 7rem;
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 30px;
   max-width: 80em;
-  padding: 0 5%;
+  padding: 7rem 5% 1em 5%;
+  min-height: 100vh;
+  grid-template-rows: auto auto auto 1fr;
+  box-sizing: border-box;
 }
 
 .currentTaskGridDiv {
@@ -173,7 +169,7 @@ h1 {
 }
 
 .links {
-  margin-bottom: 1em;
+  margin-top: auto;
 }
 .links a {
   text-decoration: none;
@@ -186,8 +182,9 @@ h1 {
 @media print, only screen and (max-width: 810px) {
   .homeContainer {
     grid-template-columns: 1fr;
-    width: 85vw;
     gap: 10px;
+    width: 100%;
+    min-height: unset;
   }
   .infokachel {
     grid-column-start: 1;
@@ -210,7 +207,7 @@ h1 {
   }
 }
 @media print {
-  .gridNewTask, .currentTaskGridDiv, .infokachel, h1, button {
+  .gridNewTask, .currentTaskGridDiv, .infokachel, h1, button, .links {
     display: none;
   }
 }/*# sourceMappingURL=home.component.css.map */
