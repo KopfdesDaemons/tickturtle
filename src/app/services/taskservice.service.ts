@@ -32,7 +32,8 @@ export class TaskserviceService {
   deleteTask(taskToDelete: Task) {
     this.tasks.next(this.tasks.value.filter((task) => task !== taskToDelete));
     if (taskToDelete === this.currentTask) {
-      this.currentTask = null;
+      taskToDelete.stopCounter();
+      this.currentTask = this.tasks.value.at(-1) ?? null;
     }
     this.toLocalStorage();
   }
@@ -53,6 +54,7 @@ export class TaskserviceService {
 
   deleteAll() {
     this.tasks = new BehaviorSubject(new Array());
+    this.currentTask?.stopCounter();
     this.currentTask = null;
   }
 
