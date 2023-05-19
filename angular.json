@@ -27,7 +27,9 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/sitemap.txt", 
+              "src/robots.txt"
             ],
             "styles": [
               "src/assets/ricosCSS/ricosframework.css",

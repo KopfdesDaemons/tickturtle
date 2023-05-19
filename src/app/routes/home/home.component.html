@@ -7,7 +7,10 @@
         <form [formGroup]="newTaskForm" class="kachel">
             <div class="inputfeld" id="newTask">
                 <input #newTaskInput formControlName="newTask" type="text" id="newTaskInput" spellcheck="false"
-                    placeholder="&nbsp;">
+                    placeholder="&nbsp;" list="taskNames">
+                    <datalist id="taskNames">
+                        <option *ngFor="let task of ts.getTasks()" [value]="task.name">{{task.name}}</option>
+                    </datalist>
                 <label class="placeholder" for="newTaskInput">task name</label>
             </div>
             <button (click)="addTask()" [disabled]="isButtonDisabled">&plus;</button>
@@ -72,5 +75,9 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <div class="links">
+        <a [routerLink]="['LegalNotice']">Legal Notice</a>
     </div>
 </div>

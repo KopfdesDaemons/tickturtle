@@ -14,11 +14,12 @@ header {
 
 img {
   height: 50px;
+  width: 50px;
   margin-left: 5px;
 }
 
 .titlediv {
-  margin: 1em;
+  margin: 1em 1em 0 1em;
   display: flex;
   align-items: center;
 }
@@ -35,4 +36,8 @@ img {
 
 .title1 {
   color: rgb(151, 200, 61);
+}
+
+a {
+  text-decoration: none;
 }/*# sourceMappingURL=header.component.css.map */

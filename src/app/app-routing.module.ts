@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './routes/home/home.component';
+import { ImpressumComponent } from './routes/impressum/impressum.component';
 
 const routes: Routes = [
-  {path:'', component: HomeComponent}
+  {path:'', component: HomeComponent},
+  {path:'LegalNotice', component: ImpressumComponent}
 ];
 
 @NgModule({

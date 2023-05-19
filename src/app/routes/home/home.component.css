@@ -172,6 +172,17 @@ h1 {
   margin-top: 24px;
 }
 
+.links {
+  margin-bottom: 1em;
+}
+.links a {
+  text-decoration: none;
+  font-weight: 600;
+}
+.links a:hover {
+  text-decoration: underline;
+}
+
 @media print, only screen and (max-width: 810px) {
   .homeContainer {
     grid-template-columns: 1fr;

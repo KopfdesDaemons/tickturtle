@@ -193,6 +193,19 @@ h1 {
     }
 }
 
+.links {
+    margin-bottom: 1em;
+
+    a {
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
 @media print, only screen and (max-width: 810px) {
     .homeContainer {
         grid-template-columns: 1fr;
