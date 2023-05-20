@@ -40,7 +40,7 @@ h1 {
     grid-template-columns: 1fr 2fr;
     gap: 30px;
     max-width: 80em;
-    padding: 7rem 5% 1em 5%;
+    padding: 5rem 5% 1em 5%;
     min-height: 100vh;
     grid-template-rows: auto auto auto 1fr;
     box-sizing: border-box;
@@ -104,13 +104,14 @@ h1 {
         height: 100%;
         width: 100%;
         display: flex;
-        align-items: center;
         
         span{
             cursor: text;
             flex-grow: 1;
             display: inline-flex;
             align-items: center;
+            overflow: hidden;
+            // max-width: 70%;
         }
     }
     
@@ -151,12 +152,17 @@ h1 {
     }
     
     .tdTime {
-        text-align: end;
-        width: 15%;
-        padding: 0;
+        width: 60px;
+        .tdTimeDiv {            
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
 
         .timeSpan {
-            margin: 4px 0 4px auto;
+            margin: 4px 0;
+            width: 40px;
             cursor: pointer;
         }
     }
@@ -226,6 +232,7 @@ h1 {
         text-decoration: none;
         font-weight: 600;
         color: rgb(68, 68, 68);
+        margin-right: 10px;
     }
 
     a:hover {

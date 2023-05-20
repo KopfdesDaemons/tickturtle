@@ -116,4 +116,10 @@ export class HomeComponent {
     task.setTotalTaskTime();
     this.ts.toLocalStorage();
   }
+
+  continueTask(task: Task) {
+    if(!this.ts.getCurrentTask()?.isStopped)this.stopCounter();
+    this.ts.setCurrentTask(task);
+    this.startCounter();
+  }
 }

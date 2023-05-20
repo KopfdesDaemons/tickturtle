@@ -3,7 +3,8 @@
 
     <h1>Time tracking</h1>
 
-    <div class="infokachel kachel"><span>Record the working time of several work steps and get the total time.</span>
+    <div class="infokachel kachel"><span>Record the working time of several work steps and get the total time. The times
+            are saved locally. The time recording runs even if the window is closed and you come back later.</span>
     </div>
 
     <div class="gridNewTask">
@@ -65,15 +66,25 @@
                                             <fa-icon [icon]="faCheck"></fa-icon>
                                         </button>
                                     </div>
-                                    <button (click)="deleteTask(task)" class="deleteBtn">
+                                    <button (click)="deleteTask(task)" class="deleteBtn" title="delete task">
                                         <fa-icon [icon]="faXmark"></fa-icon>
                                     </button>
                                 </div>
                             </td>
                             <td class="tdTime">
-                                <span class="timeSpan" (click)="openAccordion(task)">
-                                    {{task.time.value}}
-                                </span>
+                                <div class="tdTimeDiv">
+                                    <button *ngIf="task.isStopped" class="btnicon" title="continue task"
+                                        (click)="continueTask(task)">
+                                        <fa-icon [icon]="faPlay"></fa-icon>
+                                    </button>
+                                    <button *ngIf="!task.isStopped" class="btnicon" title="stop task"
+                                        (click)="stopCounter()">
+                                        <fa-icon [icon]="faPause"></fa-icon>
+                                    </button>
+                                    <span class="timeSpan" (click)="openAccordion(task)">
+                                        {{task.time.value}}
+                                    </span>
+                                </div>
                             </td>
                         </tr>
 
@@ -99,8 +110,11 @@
                                         </button>
                                     </div>
                                 </td>
-                                <td class="tdTime"><span
-                                        class="timeSpan">{{timeS.formatTimeShort(timeSpan.span)}}</span></td>
+                                <td class="tdTime">
+                                    <div class="tdTimeDiv">
+                                        <span class="timeSpan">{{timeS.formatTimeShort(timeSpan.span)}}</span>
+                                    </div>
+                                </td>
                             </tr>
                         </ng-container>
                     </ng-container>
@@ -111,5 +125,6 @@
 
     <div class="links">
         <a [routerLink]="['LegalNotice']">Legal Notice</a>
+        <a href="https://github.com/KopfdesDaemons/tickturtle.com" target="_blank">Github</a>
     </div>
 </div>

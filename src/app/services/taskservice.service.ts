@@ -52,6 +52,10 @@ export class TaskserviceService {
     return this.ts.formatTimeShort(totalTime);
   }
 
+  setCurrentTask(task: Task) {
+    this.currentTask = task;
+  }
+
   deleteAll() {
     this.tasks = new BehaviorSubject(new Array());
     this.currentTask?.stopCounter();
@@ -79,6 +83,7 @@ export class TaskserviceService {
   
       for (const t of obj) {
         const loadedTask = new Task(t[0], this.ts);
+        loadedTask.isStopped = t[0];
   
         // Load timeSpans
         const timeSpansString = t[1].timeSpans;
