@@ -100,7 +100,6 @@ h1 {
 .tasksDiv table .tdDiv span {
   cursor: text;
   flex-grow: 1;
-  height: 100%;
   display: inline-flex;
   align-items: center;
 }
@@ -130,8 +129,8 @@ h1 {
   height: 100%;
 }
 .tasksDiv table .tdTaskName button {
-  height: 100%;
-  width: 12px;
+  height: 36px;
+  margin: auto 3px;
 }
 .tasksDiv table .tdTime {
   text-align: end;

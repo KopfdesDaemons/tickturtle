@@ -109,7 +109,6 @@ h1 {
         span{
             cursor: text;
             flex-grow: 1;
-            height: 100%;
             display: inline-flex;
             align-items: center;
         }
@@ -144,10 +143,10 @@ h1 {
             align-items: center;
             height: 100%;
         }
-        
+
         button {
-            height: 100%;
-            width: 12px;
+            height: 36px;
+            margin: auto 3px;
         }
     }
     
