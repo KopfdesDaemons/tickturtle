@@ -59,6 +59,7 @@ h1 {
     overflow-y: scroll;
     max-height: 60vh;
     margin-bottom: 1em;
+
     .kachel {
         padding-top: 0;
     }
@@ -67,7 +68,6 @@ h1 {
 .tasksDiv table {
     width: 100%;
     height: 100%;
-    padding: 0 15px;
     margin-top: 0;
     
     th {
@@ -82,12 +82,18 @@ h1 {
 
     tr {
         background: transparent;
+        border-top: 1px solid rgb(219, 219, 219);
+    }
+
+    tr:first-of-type {
+        border-top: none;
     }
 
     td {
         border-bottom: 1px solid rgb(228, 228, 228);
         height: 100%;
         padding: 3px;
+        border-bottom: none;
     }
 
     tr:hover {
@@ -117,6 +123,9 @@ h1 {
         visibility: hidden;
     }
 
+    .clicked:hover {
+        background-color: inherit;
+    }
 
     .tdTaskName{
         .inputfeld {
@@ -146,8 +155,25 @@ h1 {
         width: 15%;
         padding: 0;
 
-        span {
+        .timeSpan {
             margin: 4px 0 4px auto;
+            cursor: pointer;
+        }
+    }
+
+    .trTimeSpans, .trTimeSpans:hover {
+        border-top: none;
+        background-color: var(--body);
+
+        .timeSpan {
+            background-color: var(--hintergrund-variant);
+            cursor: auto;
+        }
+        
+        .timeSpanRow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     }
 }
@@ -159,7 +185,8 @@ h1 {
     background-color: var(--hintergrund-variant-darker);
     padding: 10px;
     border-radius: 12px;
-    max-width: 40px
+    max-width: 40px;
+    user-select: none;
 }
 
 .currentTaskDiv {
@@ -209,7 +236,6 @@ h1 {
         gap: 10px;
         width: 100%;
         min-height: unset;
-        padding-top: 10em;
     }
     
     .infokachel {

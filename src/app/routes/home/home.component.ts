@@ -63,13 +63,13 @@ export class HomeComponent {
     // Bearbeitenmodus verlassen, wenn klick auf Webseite
     for (let t of this.ts.getTasks()) {
       if (t == this.currentTaskInEditMode) continue;
-      t.editMode = false;
+      t.nameEditMode = false;
     }
     this.currentTaskInEditMode = null;
   }
 
   editModeTaskName(t: Task, target: any) {
-    t.editMode = true;
+    t.nameEditMode = true;
     this.cdRef.detectChanges();
     const td = target.closest('.tdTaskName');
     const input = td?.querySelector('input');
@@ -80,7 +80,7 @@ export class HomeComponent {
   editTaskName(task: Task, name: string) {
     task.name = name;
     this.ts.toLocalStorage();
-    task.editMode = false;
+    task.nameEditMode = false;
     this.cdRef.detectChanges();
   }
 
@@ -103,5 +103,9 @@ export class HomeComponent {
 
   print(){
     window.print();
+  }
+
+  openAccordion(task: Task){
+    task.accordionOpen = !task.accordionOpen
   }
 }

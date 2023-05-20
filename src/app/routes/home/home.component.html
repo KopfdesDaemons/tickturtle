@@ -1,7 +1,10 @@
 <app-header></app-header>
 <div class="homeContainer">
+    
     <h1>Time tracking</h1>
+
     <div class="infokachel kachel"><span>Record the working time of several work steps and get the total time.</span></div>
+
     <div class="gridNewTask">
         <span>Add new task:</span>
         <form [formGroup]="newTaskForm" class="kachel">
@@ -42,33 +45,48 @@
                     <th>Time</th>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let task of ts.getTasks()">
-                        <td class="tdTaskName">
-                            <div class="tdDiv">
-                                <span [hidden]="task.editMode"
-                                    (click)="editModeTaskName(task, $event.currentTarget)">{{task.name}}</span>
-                                <div class="editDiv" *ngIf="task.editMode">
-                                    <div class="inputfeld">
-                                        <input type="text" id="editTaskName" value="{{task.name}}" #editTaskNameInput
-                                            (keyup.enter)="editTaskName(task, editTaskNameInput.value)">
-                                        <label for="editTaskName"></label>
+                    <ng-container *ngFor="let task of ts.getTasks()">
+                        <tr [class.clicked]="task.accordionOpen">
+                            <td class="tdTaskName">
+                                <div class="tdDiv">
+                                    <span [hidden]="task.nameEditMode"
+                                        (click)="editModeTaskName(task, $event.currentTarget)">{{task.name}}</span>
+                                    <div class="editDiv" *ngIf="task.nameEditMode">
+                                        <div class="inputfeld">
+                                            <input type="text" id="editTaskName" value="{{task.name}}" #editTaskNameInput
+                                                (keyup.enter)="editTaskName(task, editTaskNameInput.value)">
+                                            <label for="editTaskName"></label>
+                                        </div>
+                                        <button *ngIf="task.nameEditMode" (click)="editTaskName(task, editTaskNameInput.value)"
+                                            class="editBtn">
+                                            <fa-icon [icon]="faCheck"></fa-icon>
+                                        </button>
                                     </div>
-                                    <button *ngIf="task.editMode" (click)="editTaskName(task, editTaskNameInput.value)"
-                                        class="editBtn">
-                                        <fa-icon [icon]="faCheck"></fa-icon>
+                                    <button (click)="deleteTask(task)" class="deleteBtn">
+                                        <fa-icon [icon]="faXmark"></fa-icon>
                                     </button>
                                 </div>
-                                <button (click)="deleteTask(task)" class="deleteBtn">
-                                    <fa-icon [icon]="faXmark"></fa-icon>
-                                </button>
-                            </div>
-                        </td>
-                        <td class="tdTime">
-                            <span class="timeSpan">
-                                {{task.time.value}}
-                            </span>
-                        </td>
-                    </tr>
+                            </td>
+                            <td class="tdTime">
+                                <span class="timeSpan" (click)="openAccordion(task)">
+                                    {{task.time.value}}
+                                </span>
+                            </td>
+                        </tr>
+
+                        <!-- Arccordion Content -->
+                        <ng-container *ngIf="task.accordionOpen">
+                            <tr *ngFor="let timeSpan of task.timeSpans" class="trTimeSpans">
+                                <td>
+                                    <div class="timeSpanRow">
+                                        <span><b>start time:</b> {{timeSpan.startTime.toLocaleTimeString()}}</span>
+                                        <span><b>end time:</b> {{timeSpan.endTime?.toLocaleTimeString() ?? 'none'}}</span>
+                                    </div>
+                                </td>
+                                <td class="tdTime"><span class="timeSpan">{{timeS.formatTimeShort(timeSpan.span)}}</span></td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
                 </tbody>
             </table>
         </div>

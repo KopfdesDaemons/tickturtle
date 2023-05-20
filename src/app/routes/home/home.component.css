@@ -65,7 +65,6 @@ h1 {
 .tasksDiv table {
   width: 100%;
   height: 100%;
-  padding: 0 15px;
   margin-top: 0;
 }
 .tasksDiv table th {
@@ -79,11 +78,16 @@ h1 {
 }
 .tasksDiv table tr {
   background: transparent;
+  border-top: 1px solid rgb(219, 219, 219);
+}
+.tasksDiv table tr:first-of-type {
+  border-top: none;
 }
 .tasksDiv table td {
   border-bottom: 1px solid rgb(228, 228, 228);
   height: 100%;
   padding: 3px;
+  border-bottom: none;
 }
 .tasksDiv table tr:hover {
   background-color: var(--hintergrund-variant);
@@ -106,6 +110,9 @@ h1 {
 }
 .tasksDiv table .deleteBtn {
   visibility: hidden;
+}
+.tasksDiv table .clicked:hover {
+  background-color: inherit;
 }
 .tasksDiv table .tdTaskName .inputfeld {
   margin: 0;
@@ -131,8 +138,22 @@ h1 {
   width: 15%;
   padding: 0;
 }
-.tasksDiv table .tdTime span {
+.tasksDiv table .tdTime .timeSpan {
   margin: 4px 0 4px auto;
+  cursor: pointer;
+}
+.tasksDiv table .trTimeSpans, .tasksDiv table .trTimeSpans:hover {
+  border-top: none;
+  background-color: var(--body);
+}
+.tasksDiv table .trTimeSpans .timeSpan, .tasksDiv table .trTimeSpans:hover .timeSpan {
+  background-color: var(--hintergrund-variant);
+  cursor: auto;
+}
+.tasksDiv table .trTimeSpans .timeSpanRow, .tasksDiv table .trTimeSpans:hover .timeSpanRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .timeSpan {
@@ -143,6 +164,9 @@ h1 {
   padding: 10px;
   border-radius: 12px;
   max-width: 40px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
 .currentTaskDiv {
@@ -186,7 +210,6 @@ h1 {
     gap: 10px;
     width: 100%;
     min-height: unset;
-    padding-top: 10em;
   }
   .infokachel {
     grid-column-start: 1;
