@@ -10,7 +10,6 @@ export class TimeserviceService {
   // Macht aus 00:00:12 -> 12
   formatTimeShort(timeString: string) {
     const [hours, minutes, seconds] = timeString.split(':').map(Number);
-
     const formattedUnits = [];
     if (hours > 0) {
       formattedUnits.push(hours.toString())
@@ -21,6 +20,8 @@ export class TimeserviceService {
     if (seconds >= 0) {
       formattedUnits.push(seconds.toString().padStart(2, '0'));
     }
+
+    if(formattedUnits.length == 0) return '00';
 
     // Füge die formatierten Zeiteinheiten zusammen
     return formattedUnits.join(':');

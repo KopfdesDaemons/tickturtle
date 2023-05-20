@@ -75,41 +75,37 @@ h1 {
         top: 0;
         background-color: var(--hintergrund);
     }
-    button {
-        height: 100%;
-        width: 12px;
-    }
-
+    
     tr {
         background: transparent;
         border-top: 1px solid rgb(219, 219, 219);
     }
-
+    
     tr:first-of-type {
         border-top: none;
     }
-
+    
     td {
         border-bottom: 1px solid rgb(228, 228, 228);
         height: 100%;
         padding: 3px;
         border-bottom: none;
     }
-
+    
     tr:hover {
         background-color: var(--hintergrund-variant);
-
+        
         .deleteBtn{
             visibility: visible;
         }
     }
-
+    
     .tdDiv{
         height: 100%;
         width: 100%;
         display: flex;
         align-items: center;
-
+        
         span{
             cursor: text;
             flex-grow: 1;
@@ -118,15 +114,15 @@ h1 {
             align-items: center;
         }
     }
-
+    
     .deleteBtn{
         visibility: hidden;
     }
-
+    
     .clicked:hover {
         background-color: inherit;
     }
-
+    
     .tdTaskName{
         .inputfeld {
             margin: 0;
@@ -141,12 +137,17 @@ h1 {
                 margin-bottom: -3px; // border abrechnen
             }
         }
-
+        
         .editDiv {
             flex-grow: 1;
             display: flex;
             align-items: center;
             height: 100%;
+        }
+        
+        button {
+            height: 100%;
+            width: 12px;
         }
     }
     
@@ -172,8 +173,11 @@ h1 {
         
         .timeSpanRow {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            height: 100%;
+
+            div:first-of-type {
+                margin-right: 5px;
+            }
         }
     }
 }

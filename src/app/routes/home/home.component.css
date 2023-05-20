@@ -72,10 +72,6 @@ h1 {
   top: 0;
   background-color: var(--hintergrund);
 }
-.tasksDiv table button {
-  height: 100%;
-  width: 12px;
-}
 .tasksDiv table tr {
   background: transparent;
   border-top: 1px solid rgb(219, 219, 219);
@@ -133,6 +129,10 @@ h1 {
   align-items: center;
   height: 100%;
 }
+.tasksDiv table .tdTaskName button {
+  height: 100%;
+  width: 12px;
+}
 .tasksDiv table .tdTime {
   text-align: end;
   width: 15%;
@@ -152,8 +152,10 @@ h1 {
 }
 .tasksDiv table .trTimeSpans .timeSpanRow, .tasksDiv table .trTimeSpans:hover .timeSpanRow {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  height: 100%;
+}
+.tasksDiv table .trTimeSpans .timeSpanRow div:first-of-type, .tasksDiv table .trTimeSpans:hover .timeSpanRow div:first-of-type {
+  margin-right: 5px;
 }
 
 .timeSpan {

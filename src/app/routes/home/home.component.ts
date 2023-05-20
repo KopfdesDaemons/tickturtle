@@ -10,6 +10,7 @@ import {
   faPlay
 } from '@fortawesome/free-solid-svg-icons';
 import { TimeserviceService } from 'src/app/services/timeservice.service';
+import { timeSpan } from 'src/app/models/timeSpan';
 
 @Component({
   selector: 'app-home',
@@ -107,5 +108,12 @@ export class HomeComponent {
 
   openAccordion(task: Task){
     task.accordionOpen = !task.accordionOpen
+  }
+
+  deleteTimeSpan(task:Task, timeSpan: timeSpan){
+    const index = task.timeSpans.findIndex(function(t){return t === timeSpan})
+    task.timeSpans.splice(index, 1);
+    task.setTotalTaskTime();
+    this.ts.toLocalStorage();
   }
 }

@@ -1,9 +1,10 @@
 <app-header></app-header>
 <div class="homeContainer">
-    
+
     <h1>Time tracking</h1>
 
-    <div class="infokachel kachel"><span>Record the working time of several work steps and get the total time.</span></div>
+    <div class="infokachel kachel"><span>Record the working time of several work steps and get the total time.</span>
+    </div>
 
     <div class="gridNewTask">
         <span>Add new task:</span>
@@ -33,7 +34,8 @@
             <button *ngIf="ts.getCurrentTask()?.isStopped" (click)="startCounter()">
                 <fa-icon [icon]="faPlay"></fa-icon>
             </button>
-            <span class="timeSpan" [class.isStopped]="ts.getCurrentTask()?.isStopped" >{{ts.getCurrentTask()?.time?.value}}</span>
+            <span class="timeSpan"
+                [class.isStopped]="ts.getCurrentTask()?.isStopped">{{ts.getCurrentTask()?.time?.value}}</span>
         </div>
     </div>
 
@@ -53,12 +55,13 @@
                                         (click)="editModeTaskName(task, $event.currentTarget)">{{task.name}}</span>
                                     <div class="editDiv" *ngIf="task.nameEditMode">
                                         <div class="inputfeld">
-                                            <input type="text" id="editTaskName" value="{{task.name}}" #editTaskNameInput
+                                            <input type="text" id="editTaskName" value="{{task.name}}"
+                                                #editTaskNameInput
                                                 (keyup.enter)="editTaskName(task, editTaskNameInput.value)">
                                             <label for="editTaskName"></label>
                                         </div>
-                                        <button *ngIf="task.nameEditMode" (click)="editTaskName(task, editTaskNameInput.value)"
-                                            class="editBtn">
+                                        <button *ngIf="task.nameEditMode"
+                                            (click)="editTaskName(task, editTaskNameInput.value)" class="editBtn">
                                             <fa-icon [icon]="faCheck"></fa-icon>
                                         </button>
                                     </div>
@@ -79,11 +82,25 @@
                             <tr *ngFor="let timeSpan of task.timeSpans" class="trTimeSpans">
                                 <td>
                                     <div class="timeSpanRow">
-                                        <span><b>start time:</b> {{timeSpan.startTime.toLocaleTimeString()}}</span>
-                                        <span><b>end time:</b> {{timeSpan.endTime?.toLocaleTimeString() ?? 'none'}}</span>
+                                        <div>
+                                            <div>
+                                                <b>start time:</b>
+                                            </div>
+                                            <div>{{timeSpan.startTime.toLocaleTimeString()}}</div>
+                                        </div>
+                                        <div>
+                                            <div>
+                                                <b>end time:</b>
+                                            </div>
+                                            <div>{{timeSpan.endTime?.toLocaleTimeString() ?? 'none'}}</div>
+                                        </div>
+                                        <button class="btnicon" (click)="deleteTimeSpan(task, timeSpan)">
+                                            <fa-icon [icon]="faXmark"></fa-icon>
+                                        </button>
                                     </div>
                                 </td>
-                                <td class="tdTime"><span class="timeSpan">{{timeS.formatTimeShort(timeSpan.span)}}</span></td>
+                                <td class="tdTime"><span
+                                        class="timeSpan">{{timeS.formatTimeShort(timeSpan.span)}}</span></td>
                             </tr>
                         </ng-container>
                     </ng-container>
