@@ -27,13 +27,13 @@ export class HomeComponent {
   isButtonDisabled = true;
   currentTaskInEditMode: Task | null = null;
 
-  constructor(public ts: TaskserviceService, private formBuilder: FormBuilder, public title: Title, public elem: ElementRef, public cdRef: ChangeDetectorRef, public timeS: TimeserviceService, public meta: Meta ) {
+  constructor(public ts: TaskserviceService, private formBuilder: FormBuilder, public title: Title, public elem: ElementRef, public cdRef: ChangeDetectorRef, public timeS: TimeserviceService, public meta: Meta) {
     this.newTaskForm = this.formBuilder.group({
       newTask: [''],
     })
 
     const description = 'Record the working time of several work steps and get the total time. No registration required.'
-    this.meta.addTag({ name: 'description', content: description }); 
+    this.meta.addTag({ name: 'description', content: description });
 
     ts.fromLocalStorage();
 
@@ -48,6 +48,7 @@ export class HomeComponent {
     newTask.startCounter();
     this.ts.addTask(newTask);
     this.newTaskForm.controls['newTask'].setValue('');
+    
     this.ts.getCurrentTask()?.time.subscribe((value) => {
       this.title.setTitle('TickTurtle ' + value + ' ' + this.ts.getCurrentTask()?.name)
     })
@@ -86,14 +87,12 @@ export class HomeComponent {
   }
 
   stopCounter() {
-    const t = this.ts.getCurrentTask();
-    t?.stopCounter();
+    this.ts.getCurrentTask()?.stopCounter();
     this.ts.toLocalStorage();
   }
 
   startCounter() {
-    const t = this.ts.getCurrentTask();
-    t?.startCounter();
+    this.ts.getCurrentTask()?.startCounter();
     this.ts.toLocalStorage();
   }
 
@@ -102,24 +101,21 @@ export class HomeComponent {
     this.ts.toLocalStorage();
   }
 
-  print(){
+  print() {
     window.print();
   }
 
-  openAccordion(task: Task){
+  openAccordion(task: Task) {
     task.accordionOpen = !task.accordionOpen
   }
 
-  deleteTimeSpan(task:Task, timeSpan: timeSpan){
-    const index = task.timeSpans.findIndex(function(t){return t === timeSpan})
-    task.timeSpans.splice(index, 1);
-    task.setTotalTaskTime();
+  deleteTimeSpan(task: Task, timeSpan: timeSpan) {
+    task.deleteTimeSpan(timeSpan);
     this.ts.toLocalStorage();
   }
 
   continueTask(task: Task) {
-    if(!this.ts.getCurrentTask()?.isStopped)this.stopCounter();
-    this.ts.setCurrentTask(task);
+    this.ts.continueTask(task);
     this.startCounter();
   }
 }

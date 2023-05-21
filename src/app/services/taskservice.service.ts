@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Task } from '../models/task';
 import { TimeserviceService } from './timeservice.service';
-import { timeSpan } from '../models/timeSpan';
+import { localStorageTaskObj } from '../models/localStorageTaskObj';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +56,11 @@ export class TaskserviceService {
     this.currentTask = task;
   }
 
+  continueTask(task: Task) {
+    if (!this.getCurrentTask()?.isStopped) this.getCurrentTask()?.stopCounter();
+    this.setCurrentTask(task);
+  }
+
   deleteAll() {
     this.tasks = new BehaviorSubject(new Array());
     this.currentTask?.stopCounter();
@@ -63,17 +68,16 @@ export class TaskserviceService {
   }
 
   toLocalStorage(): void {
-    const taskMap: { [name: string]: { timeSpans: any[]; isStopped: boolean } } = {};
+    const taskObjArray: localStorageTaskObj[] = [];
     const tasks = this.tasks.value;
   
     for (const t of tasks) {
-      taskMap[t.name] = {
-        timeSpans: t.timeSpans,
-        isStopped: t.isStopped,
-      };
+      const obj = new localStorageTaskObj();
+      obj.initFromTaskObj(t);
+      taskObjArray.push(obj);
     }
   
-    localStorage.setItem('tasks', JSON.stringify(taskMap));
+    localStorage.setItem('tasks', JSON.stringify(taskObjArray));
   
     if (this.currentTask) {
       const id = this.tasks.value.findIndex((item) => item === this.currentTask);
@@ -83,42 +87,25 @@ export class TaskserviceService {
   
   fromLocalStorage(): void {
     try {
+      this.tasks = new BehaviorSubject(new Array());
       const localStorageItem = localStorage.getItem('tasks');
       if (!localStorageItem) return;
   
-      const obj: { [name: string]: { timeSpans: any[]; isStopped: boolean } } = JSON.parse(localStorageItem);
+      const taskObjArray = JSON.parse(localStorageItem);      
   
-      for (const taskName in obj) {
-        if (obj.hasOwnProperty(taskName)) {
-          const taskData = obj[taskName];
-  
-          const loadedTask = new Task(taskName, this.ts);
-          loadedTask.isStopped = taskData.isStopped;
-  
-          // Lade timeSpans
-          const timeSpans = taskData.timeSpans.map((obj: any) => {
-            const timeSp: timeSpan = new timeSpan();
-            timeSp.startTime = new Date(obj.startTime);
-            timeSp.endTime = obj.endTime ? new Date(obj.endTime) : null;
-            return timeSp;
-          });
-  
-          loadedTask.timeSpans = timeSpans;
-          loadedTask.setTotalTaskTime();
-          this.tasks.next([...this.tasks.value, loadedTask]);
-        }
+      for (const task of taskObjArray) {
+        const loadedTask = new localStorageTaskObj();
+        loadedTask.intFromLocalStorage(task);
+        this.tasks.next([...this.tasks.value, loadedTask.toTaskObj(this.ts)]);
       }
   
+      // Ermittle currentTask aus Id im localStorage
       const currentTaskIdString = localStorage.getItem('currentTaskId');
       const currentTaskId = Number(currentTaskIdString);
-  
-      if (currentTaskId >= 0) {
-        this.currentTask = this.tasks.value[currentTaskId];
-      }
-  
-      if (!this.currentTask?.isStopped) {
-        this.currentTask?.startCounter();
-      }
-    } catch {}
+      if (currentTaskId >= 0) this.currentTask = this.tasks.value[currentTaskId];
+      if (!this.currentTask?.isStopped) this.currentTask?.startCounter();
+    } catch(e) {
+      console.log(e);
+    }
   }  
 }

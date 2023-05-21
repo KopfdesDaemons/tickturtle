@@ -52,5 +52,15 @@ export class Task {
         this.isStopped = true;
         clearInterval(this.counter);
         this.counter = null;
-    }  
+    }
+    
+    deleteTimeSpan(timeS: timeSpan) {
+        const index = this.timeSpans.findIndex(function (t) { return t === timeS })
+
+        const lastTimeSpan = this.timeSpans.at(-1);
+        if (lastTimeSpan === timeS) this.isStopped = true;
+    
+        this.timeSpans.splice(index, 1);
+        this.setTotalTaskTime();
+    }
 }
