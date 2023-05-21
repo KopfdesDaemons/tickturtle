@@ -63,51 +63,62 @@ export class TaskserviceService {
   }
 
   toLocalStorage(): void {
-    const taskMap: Map<string, any> = new Map();
+    const taskMap: { [name: string]: { timeSpans: any[]; isStopped: boolean } } = {};
     const tasks = this.tasks.value;
+  
     for (const t of tasks) {
-      taskMap.set(t.name, {
+      taskMap[t.name] = {
         timeSpans: t.timeSpans,
-        isStopped: t.isStopped
-      })
+        isStopped: t.isStopped,
+      };
     }
-    localStorage.setItem('tasks', JSON.stringify([...taskMap]));
+  
+    localStorage.setItem('tasks', JSON.stringify(taskMap));
+  
+    if (this.currentTask) {
+      const id = this.tasks.value.findIndex((item) => item === this.currentTask);
+      localStorage.setItem('currentTaskId', id.toString());
+    }
   }
-
+  
   fromLocalStorage(): void {
-    try{
+    try {
       const localStorageItem = localStorage.getItem('tasks');
       if (!localStorageItem) return;
-      const string = localStorageItem ?? '';
-      const obj = JSON.parse(string);
   
-      for (const t of obj) {
-        const loadedTask = new Task(t[0], this.ts);
-        loadedTask.isStopped = t[0];
+      const obj: { [name: string]: { timeSpans: any[]; isStopped: boolean } } = JSON.parse(localStorageItem);
   
-        // Load timeSpans
-        const timeSpansString = t[1].timeSpans;
+      for (const taskName in obj) {
+        if (obj.hasOwnProperty(taskName)) {
+          const taskData = obj[taskName];
   
-        const timeSpans = timeSpansString.map((obj: any) => {
-          const timeSp: timeSpan = new timeSpan();
-          timeSp.startTime = new Date(obj.startTime);
-          timeSp.endTime = obj.endTime ? new Date(obj.endTime) : null;
-          return timeSp;
-        });
+          const loadedTask = new Task(taskName, this.ts);
+          loadedTask.isStopped = taskData.isStopped;
   
-        loadedTask.timeSpans = timeSpans;
-        loadedTask.setTotalTaskTime();
-        this.tasks.next([...this.tasks.value, loadedTask]);
+          // Lade timeSpans
+          const timeSpans = taskData.timeSpans.map((obj: any) => {
+            const timeSp: timeSpan = new timeSpan();
+            timeSp.startTime = new Date(obj.startTime);
+            timeSp.endTime = obj.endTime ? new Date(obj.endTime) : null;
+            return timeSp;
+          });
+  
+          loadedTask.timeSpans = timeSpans;
+          loadedTask.setTotalTaskTime();
+          this.tasks.next([...this.tasks.value, loadedTask]);
+        }
       }
   
-      this.currentTask = this.tasks.value.at(-1) ?? null;
-      if (this.currentTask) this.currentTask.isStopped = obj.at(-1).isStopped;
+      const currentTaskIdString = localStorage.getItem('currentTaskId');
+      const currentTaskId = Number(currentTaskIdString);
   
-      if (!this.currentTask?.timeSpans.at(-1)?.endTime) {
+      if (currentTaskId >= 0) {
+        this.currentTask = this.tasks.value[currentTaskId];
+      }
+  
+      if (!this.currentTask?.isStopped) {
         this.currentTask?.startCounter();
-      } else {
-        this.currentTask.isStopped = true;
       }
-    } catch{}
-  }
+    } catch {}
+  }  
 }
