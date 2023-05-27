@@ -5,7 +5,8 @@ import { ImpressumComponent } from './routes/impressum/impressum.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
-  {path:'LegalNotice', component: ImpressumComponent}
+  {path:'LegalNotice', component: ImpressumComponent},
+  {path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({
