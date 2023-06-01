@@ -40,8 +40,8 @@
         </div>
     </div>
 
-    <div class="gridTasks">
-        <div *ngIf="ts.getTasks().length > 0" class="tasksDiv kachel">
+    <div *ngIf="ts.getTasks().length > 0" class="gridTasks kachel">
+        <div class="tasksDiv">
             <table>
                 <thead>
                     <th>Task</th>
@@ -121,10 +121,9 @@
                 </tbody>
             </table>
         </div>
-    </div>
-
-    <div class="links">
-        <a [routerLink]="['LegalNotice']">Legal Notice</a>
-        <a href="https://github.com/KopfdesDaemons/tickturtle.com" target="_blank">Github</a>
-    </div>
+    </div>    
+</div>
+<div class="links">
+    <a [routerLink]="['LegalNotice']">Legal Notice</a>
+    <a href="https://github.com/KopfdesDaemons/tickturtle.com" target="_blank">Github</a>
 </div>

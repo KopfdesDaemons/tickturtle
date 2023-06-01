@@ -6,8 +6,10 @@ header {
     display: flex;
     align-items: center;
     padding-left: 10px;
-    position: fixed;
-    background-color: var(--body);
+    padding-bottom: 10px;
+    // position: fixed;
+    box-sizing: border-box;
+    background-color: transparent;
     width: 100%;
     z-index: 10;
 }
@@ -29,6 +31,7 @@ img {
 .logodiv:hover {
     background-color: var(--hintergrund);
     border-radius: 12px;
+    box-shadow: 6px 7px 28px -20px rgba(0,0,0,0.7)
 }
 
 .titleA {

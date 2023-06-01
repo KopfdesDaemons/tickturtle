@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 100vh;
+    margin-bottom: 1em;
 }
 
 h1 {
@@ -20,11 +20,11 @@ h1 {
     align-items: center;
     flex-direction: column;
     grid-row-start: 2;
-    
+
     span {
         width: 100%;
     }
-    
+
     form {
         display: flex;
         align-items: center;
@@ -35,12 +35,12 @@ h1 {
     grid-row-start: 3;
 }
 
-.homeContainer{
+.homeContainer {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 30px;
     max-width: 80em;
-    padding: 5rem 5% 1em 5%;
+    padding: 2em 5% 1em 5%;
     min-height: 100vh;
     grid-template-rows: auto auto auto 1fr;
     box-sizing: border-box;
@@ -69,43 +69,43 @@ h1 {
     width: 100%;
     height: 100%;
     margin-top: 0;
-    
+
     th {
         position: sticky;
         top: 0;
         background-color: var(--hintergrund);
     }
-    
+
     tr {
         background: transparent;
         border-top: 1px solid rgb(219, 219, 219);
     }
-    
+
     tr:first-of-type {
         border-top: none;
     }
-    
+
     td {
         border-bottom: 1px solid rgb(228, 228, 228);
         height: 100%;
         padding: 3px;
         border-bottom: none;
     }
-    
+
     tr:hover {
         background-color: var(--hintergrund-variant);
-        
-        .deleteBtn{
+
+        .deleteBtn {
             visibility: visible;
         }
     }
-    
-    .tdDiv{
+
+    .tdDiv {
         height: 100%;
         width: 100%;
         display: flex;
-        
-        span{
+
+        span {
             cursor: text;
             flex-grow: 1;
             display: inline-flex;
@@ -114,21 +114,22 @@ h1 {
             // max-width: 70%;
         }
     }
-    
-    .deleteBtn{
+
+    .deleteBtn {
         visibility: hidden;
     }
-    
+
     .clicked:hover {
         background-color: inherit;
     }
-    
-    .tdTaskName{
+
+    .tdTaskName {
         .inputfeld {
             margin: 0;
             flex-grow: 1;
             box-shadow: none;
             height: 100%;
+
             input {
                 all: unset;
                 height: unset;
@@ -137,7 +138,7 @@ h1 {
                 margin-bottom: -3px; // border abrechnen
             }
         }
-        
+
         .editDiv {
             flex-grow: 1;
             display: flex;
@@ -150,10 +151,11 @@ h1 {
             margin: auto 3px;
         }
     }
-    
+
     .tdTime {
         width: 60px;
-        .tdTimeDiv {            
+
+        .tdTimeDiv {
             padding: 0;
             display: flex;
             align-items: center;
@@ -167,7 +169,8 @@ h1 {
         }
     }
 
-    .trTimeSpans, .trTimeSpans:hover {
+    .trTimeSpans,
+    .trTimeSpans:hover {
         border-top: none;
         background-color: var(--body);
 
@@ -175,7 +178,7 @@ h1 {
             background-color: var(--hintergrund-variant);
             cursor: auto;
         }
-        
+
         .timeSpanRow {
             display: flex;
             height: 100%;
@@ -216,18 +219,18 @@ h1 {
     }
 }
 
-.statistic{
+.statistic {
     display: flex;
     justify-content: space-between;
 
-    button{
+    button {
         margin-top: 24px;
     }
 }
 
 .links {
     margin-top: auto;
-    
+
     a {
         text-decoration: none;
         font-weight: 600;
@@ -240,14 +243,15 @@ h1 {
     }
 }
 
-@media print, only screen and (max-width: 810px) {
+@media print,
+only screen and (max-width: 810px) {
     .homeContainer {
         grid-template-columns: 1fr;
         gap: 10px;
         width: 100%;
         min-height: unset;
     }
-    
+
     .infokachel {
         grid-column-start: 1;
         grid-row-start: 2;
@@ -274,7 +278,13 @@ h1 {
 }
 
 @media print {
-    .gridNewTask, .currentTaskGridDiv, .infokachel, h1, button, .links {
+
+    .gridNewTask,
+    .currentTaskGridDiv,
+    .infokachel,
+    h1,
+    button,
+    .links {
         display: none;
     }
 }

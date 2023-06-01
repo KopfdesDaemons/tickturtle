@@ -2,14 +2,19 @@
     background-color: var(--hintergrund);
     padding: 10px;
     border-radius: 12px;
+    box-shadow: 6px 7px 28px -20px rgba(0,0,0,0.7)
 }
 
 :root {
     --hsl-color: 170, 50%;
     --body: rgb(219, 237, 229);
-    --hintergrund: rgb(247, 255, 250);
+    --hintergrund: rgb(255, 255, 255);
 }
 
 [hidden] {
     display: none !important;
+}
+
+body {
+    background: linear-gradient(90deg, rgb(242, 255, 244) 0%, rgb(245, 255, 249) 37%, rgb(249, 255, 250) 100%);
 }
